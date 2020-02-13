@@ -3,6 +3,8 @@
 import requests
 import json
 
+def to_usd (price):
+    return "${0:.2f}".format(price)
 
 # INFO INPUTS
 
@@ -17,9 +19,12 @@ response = requests.get(request_url)
 parsed_response = json.loads(response.text)
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 
-latest_close = parsed_response["Time Series (Daily)"]["2020-02-13"]["4. close"]
-def to_usd (price):
-    return "${0:.2f}".format(price)
+tsd = parsed_response["Time Series (Daily)"]
+
+dates = list(tsd.keys())
+
+latest_day = dates[0]
+latest_close = tsd[latest_day]["4. close"]
 
 #breakpoint()
 
