@@ -27,7 +27,7 @@ latest_day = dates[0]
 latest_close = tsd[latest_day]["4. close"]
 
 
-# maximum of all high prices
+# Recent High
 high_prices = []
 
 for each_day in dates:
@@ -35,7 +35,16 @@ for each_day in dates:
     high_prices.append(high_price)
 
 recent_high = max(high_prices)
-#breakpoint()
+
+# Recent Low
+low_prices = []
+
+for each_day in dates:
+    low_price = float(tsd[each_day]["3. low"])
+    low_prices.append(low_price)
+
+recent_low = min(low_prices)
+
 
 # INFO OUTPUTS
 
@@ -45,11 +54,11 @@ print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
 print("REQUEST AT: 2018-02-20 02:00pm")
 print("-------------------------")
-print("LATEST DAY:" + last_refreshed)
+print("LATEST DAY: " + last_refreshed)
 #print(f"LATEST DAY: {last_refreshed}")
-print("LATEST CLOSE:" + to_usd(float(latest_close)))
-print("RECENT HIGH:" + to_usd(float(recent_high)))
-print("RECENT LOW: $99,000.00")
+print("LATEST CLOSE: " + to_usd(float(latest_close)))
+print("RECENT HIGH: " + to_usd(float(recent_high)))
+print("RECENT LOW: " + to_usd(float(recent_low)))
 print("-------------------------")
 print("RECOMMENDATION: BUY!")
 print("RECOMMENDATION REASON: TODO")
