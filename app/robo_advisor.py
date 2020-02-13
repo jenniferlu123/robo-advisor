@@ -55,18 +55,20 @@ csv_file_path = os.path.join(os.path.dirname(__file__),"..", "data", "prices.csv
 csv_headers = ["timestamp", "open", "high", "low", "close", "volume"]
 
 with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writing"
-    writer = csv.DictWriter(csv_file, fieldnames=["city", "name"])
+    writer = csv.DictWriter(csv_file, fieldnames=csv_headers)
     writer.writeheader() # uses fieldnames set above
     
     # need some sort of loop
-    writer.writerow({
-        "timestamp": "TODO", 
-        "open": "TODO", 
-        "high": "TODO".
-        "low": "TODO",
-        "close": "TODO",
-        "volume": "TODO"
-    })
+    for each_day in dates:
+        daily_prices = tsd[each_day]
+        writer.writerow({
+            "timestamp": each_day, 
+            "open": daily_prices["1. open"], 
+            "high": daily_prices["2. high"],
+            "low": daily_prices["3. low"],
+            "close": daily_prices["4. close"],
+            "volume": daily_prices["5. volume"]
+        })
     
 
 # INFO OUTPUTS
