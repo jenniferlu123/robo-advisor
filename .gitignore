@@ -2,3 +2,4 @@
 
 # ignore secret environment variable values in the ".env" file:
 .env
+auth/google-credentials.json
