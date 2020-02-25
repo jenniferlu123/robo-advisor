@@ -73,7 +73,7 @@ python app/robo_advisor.py
 
 1. Enter your stock or cryptocurrency ticker. If you have multiple tickers, type one ticker at a time, and then press the 'ENTER' key to enter the next one
 
-    Note: The request is limited to a maximum of 5 stock each time
+    Note: The request is limited to a maximum of 5 stocks each time
 
 2. After you have entered all the tickers, enter DONE
 
