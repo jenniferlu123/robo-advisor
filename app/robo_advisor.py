@@ -29,7 +29,7 @@ SENDER_SMS  = os.environ.get("SENDER_SMS", default="OOPS")
 def to_usd (price):
     return "${0:.2f}".format(price)
 
-# Define a variable that can be used to convert numbers to percentage
+# Define a variable that can be used to convert numbers to percentage and 1 decimal place
 def to_one_decimal_perc(a):
     return "{0:.1f}%".format(a)
 
@@ -40,7 +40,7 @@ def to_one_decimal_perc(a):
 request_time = datetime.datetime.now()
 today = datetime.date.today()
 
-# Ask user to input stock symbole/tickers
+# Ask user to input stock tickers
 tickers = []
 
 while True:
@@ -192,7 +192,7 @@ for t in tickers:
 
         previous_day = dates[1]
         previous_day_close = float(tsd[previous_day]["4. close"])
-        change = ((current/previous_day_close)-1)*100
+        change = (current/previous_day_close-1)*100
 
         if current >= (previous_day_close*1.05) or current <= (previous_day_close*0.95):
 
