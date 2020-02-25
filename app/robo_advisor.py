@@ -44,7 +44,7 @@ today = datetime.date.today()
 tickers = []
 
 while True:
-    ticker = input("Please enter a stock ticker or DONE when you finish: ")
+    ticker = input("Please enter a stock ticker or DONE when you are finished: ")
     if len(ticker) > 8 or ticker.isnumeric == True:
         print("Please enter a valid ticker. It should not be longer than 8 characters or be all-numeric.")
     elif ticker == "DONE":
