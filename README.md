@@ -39,22 +39,22 @@ From inside the virtual environment, install all necessary packages by running t
 pip install -r requirements.txt
 ```
 
-## Alpha Vantage set up
+## Alpha Vantage account set up
 
-Please set up an account at [Alpha Vantage](https://www.alphavantage.co/) website and obtain an Alpha Advantage API KEY. Then, update that information in the ".env" file:
+Please set up an account at [Alpha Vantage](https://www.alphavantage.co/) and obtain an Alpha Advantage API KEY. Then, update that information in the ".env" file:
 
     ALPHAVANTAGE_API_KEY = "EXAMPLE"
 
 ## Email template set up
 
-If you are interested in using this program's email capabilities to send out stock price movement alerts, please set up an account at [Sendgrid](https://signup.sendgrid.com/) website, and obtain a Sendgrid API KEY. Then, please update the ".env" file using your Sendgrid API KEY and email address (the one you used to set up the Sendgrid account): 
+If you are interested in using this program's email capabilities to send out stock price movement alerts, please set up an account at [Sendgrid](https://signup.sendgrid.com/), and obtain a Sendgrid API KEY. Then, using that information please update the ".env" file using your Sendgrid API KEY and email address (the one you used to set up the Sendgrid account): 
 
     SENDGRID_API_KEY="EXAMPLE" 
     MY_EMAIL_ADDRESS="EXAMPLE" 
 
 ## SMS template set up
 
-If you are interested in using this program's SMS capabilities to send stock price movement alerts, please set up an account at [Twilio](https://www.twilio.com/try-twilio) website, and obtain a Twilio Account SID, Twilio Auth Token, and Twilio phone number to send out SMS messages. Then, please update the following three credentials in the ".env" file: 
+If you are interested in using this program's SMS capabilities to send stock price movement alerts, please set up an account at [Twilio](https://www.twilio.com/try-twilio), and obtain a Twilio Account SID, Twilio Auth Token, and Twilio phone number to send out SMS messages. Then, using that information please update the following three credentials in the ".env" file: 
 
     TWILIO_ACCOUNT_SID="EXAMPLE"
     TWILIO_AUTH_TOKEN="EXAMPLE"
@@ -69,9 +69,9 @@ Run the python script:
 python app/robo_advisor.py
 ```
 
-## Overview of the "steps" of the robo-advisor program:
+# Overview of the "steps" of the robo-advisor program:
 
-1. Enter your stock or cryptocurrency ticker(s). If you have multiple tickers, type one ticker at a time, and press the 'ENTER' key to enter the next one
+1. Enter your stock or cryptocurrency ticker. If you have multiple tickers, type one ticker at a time, and press the 'ENTER' key to enter the next one
 
 2. After you have entered all the tickers, enter DONE
 
