@@ -2,7 +2,7 @@
 
 # Introduction:  
 
-The goal of this python application is to automate the process of providing clients/users with stock trading recommendations. Specifically, users will be able to enter one or more stock or cryptocurrency symbols (tickers) and the program will provide historical trading data as well as a recommendation as to whether or not the user should buy the given stocks or cryptocurrencies.  
+The goal of this python application is to automate the process of providing clients and users with stock trading recommendations. Specifically, users will be able to enter one or more stock or cryptocurrency symbols (tickers) and the program will provide historical trading data as well as a recommendation as to whether or not the user should buy the given stocks or cryptocurrencies.  
 
 # Prerequisites:
 
@@ -47,18 +47,18 @@ Please set up an account at [Alpha Vantage](https://www.alphavantage.co/) websit
 
 ## Email template set up
 
-If you are interested in using this program's email capabilities to send out receipts to customers, please set up an account at [Sendgrid](https://signup.sendgrid.com/) website, and obtain a Sendgrid API KEY. Then, please update the ".env" file using your Sendgrid API KEY and email address (the one you used to set up the Sendgrid account): 
+If you are interested in using this program's email capabilities to send out stock price movement alerts, please set up an account at [Sendgrid](https://signup.sendgrid.com/) website, and obtain a Sendgrid API KEY. Then, please update the ".env" file using your Sendgrid API KEY and email address (the one you used to set up the Sendgrid account): 
 
     SENDGRID_API_KEY="EXAMPLE" 
     MY_EMAIL_ADDRESS="EXAMPLE" 
 
 ## SMS template set up
 
-If you are interested in using this program's SMS capabilities to send stock price movement alert messages, please set up an account at [Twilio](https://www.twilio.com/try-twilio) website, and obtain a Twilio Account SID, Twilio Auth Token, and Twilio phone number to send out SMS messages. Then, please update the following three credentials in ".env" file : 
+If you are interested in using this program's SMS capabilities to send stock price movement alerts, please set up an account at [Twilio](https://www.twilio.com/try-twilio) website, and obtain a Twilio Account SID, Twilio Auth Token, and Twilio phone number to send out SMS messages. Then, please update the following three credentials in the ".env" file: 
 
     TWILIO_ACCOUNT_SID="EXAMPLE"
     TWILIO_AUTH_TOKEN="EXAMPLE"
-    SENDER_SMS="+11234567891" # no dashes or spaces, but do include a '+' sign and country area code at the begining (e.g. +1 for a U.S. phone followed by the actual phone number 1234567891)
+    SENDER_SMS="+11234567891" # include a '+' sign and country area code at the beginning, but no dashes or spaces (e.g. +1 for a U.S. phone followed by the actual phone number 1234567891)
 
 
 # Usage:
@@ -71,7 +71,7 @@ python app/robo_advisor.py
 
 ## Overview of the "steps" of the robo-advisor program:
 
-1. Enter your stock ticker(s). If you have multiple tickers, type one at a time, and press the 'ENTER' key to enter the next one
+1. Enter your stock or cryptocurrency ticker(s). If you have multiple tickers, type one ticker at a time, and press the 'ENTER' key to enter the next one
 
 2. After you have entered all the tickers, enter DONE
 
@@ -81,6 +81,6 @@ python app/robo_advisor.py
 
     Note: Please ask the user to enter a phone number including a '+' sign and the country area code but no dashes or spaces (e.g. +1 for a U.S. phone followed by the actual phone number)
 
-5. After entering the email address and phone number, the program will present some historical trading information for the stock ticker that was requested as well as a live stock price chart (opening a new web browser window)
+5. After entering the email address and phone number, the program will present some historical trading information for the stock ticker that was requested as well as the stock's price chart (opened in a new web browser window)
 
 6. If at the time of the request, the stock price has moved 5% higher or lower than the previous days' closing price, the user will receive an email and SMS alert with the stock price movement information
