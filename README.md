@@ -2,7 +2,7 @@
 
 # Introduction:  
 
-The goal of this python application is to automate the process of providing clients and users with stock trading recommendations. Specifically, users will be able to enter one or more stock or cryptocurrency symbols (tickers) and the program will provide historical trading data as well as a recommendation as to whether or not the user should buy the given stocks or cryptocurrencies.  
+The goal of this python application is to automate the process of providing clients with stock trading recommendations. Specifically, clients/users will be able to enter one or more stock or cryptocurrency symbols (tickers) and the program will provide historical trading data as well as a recommendation as to whether or not the user should buy the given stocks or cryptocurrencies.  
 
 # Prerequisites:
 
