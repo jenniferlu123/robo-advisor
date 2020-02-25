@@ -63,7 +63,7 @@ for t in tickers:
 
     if "Error Message" in response.text:
         print("-------------------------")
-        print("TICKER: " + t)
+        print("SELECTED TICKER: " + t)
         print("Sorry, could not find your ticker.")
         print("-------------------------")
     else:
@@ -94,7 +94,6 @@ for t in tickers:
                     "volume": daily_prices["5. volume"]
                 })
 
-    
         # Latest Day
         last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 
@@ -170,7 +169,7 @@ for t in tickers:
         output += "\n"
         output += "-------------------------"
         output += "\n"
-        output += f"RECOMMENDATION: {recommendation}!"
+        output += f"RECOMMENDATION: {recommendation}"
         output += "\n"
         output += f"RECOMMENDATION REASON: {recommendation_reason}"
         output += "\n"
@@ -178,6 +177,7 @@ for t in tickers:
         output += "\n"
 
         print(output)
+
 
         # Plot prices over time using thrid-party package Plotly
 
@@ -188,7 +188,7 @@ for t in tickers:
         }, auto_open=True) 
 
 
-        # Send price movement alert messages via Email and SMS
+        # Send price movement alerts via Email and SMS
 
         previous_day = dates[1]
         previous_day_close = float(tsd[previous_day]["4. close"])
@@ -211,7 +211,6 @@ for t in tickers:
             message_text = alert_message
             content = Content("text/plain", message_text)
             mail = Mail(from_email, subject, to_email, content)
-            #print("Email sent")
 
             response = sg.client.mail.send.post(request_body=mail.get())
 

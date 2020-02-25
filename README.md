@@ -2,7 +2,7 @@
 
 # Introduction:  
 
-The goal of this python application is to automate the process of providing clients or users with stock trading recommendations. Specifically, users will be able to enter one or more stock or cryptocurrency symbols (tickers) and provide historical trading data as well as a recommendation as to whether or not the user should buy the given stocks or cryptocurrencies.  
+The goal of this python application is to automate the process of providing clients/users with stock trading recommendations. Specifically, users will be able to enter one or more stock or cryptocurrency symbols (tickers) and the program will provide historical trading data as well as a recommendation as to whether or not the user should buy the given stocks or cryptocurrencies.  
 
 # Prerequisites:
 
@@ -39,16 +39,22 @@ From inside the virtual environment, install all necessary packages by running t
 pip install -r requirements.txt
 ```
 
+## Alpha Vantage set up
+
+Please set up an account at [Alpha Vantage](https://www.alphavantage.co/) website and obtain an Alpha Advantage API KEY. Then, update that information in the ".env" file:
+
+    ALPHAVANTAGE_API_KEY = "EXAMPLE"
+
 ## Email template set up
 
-If you are interested in using this program's email capabilities to send out receipts to customers, please set up an account at [Sendgrid] (https://signup.sendgrid.com/), and obtain a Sendgrid. Then, please update the ".env" file using your Sendgrid API key and email address (the one you used to set up the Sendgrid account): 
+If you are interested in using this program's email capabilities to send out receipts to customers, please set up an account at [Sendgrid](https://signup.sendgrid.com/) website, and obtain a Sendgrid API KEY. Then, please update the ".env" file using your Sendgrid API KEY and email address (the one you used to set up the Sendgrid account): 
 
     SENDGRID_API_KEY="EXAMPLE" 
     MY_EMAIL_ADDRESS="EXAMPLE" 
 
 ## SMS template set up
 
-If you are interested in using this program's SMS capabilities to send stock price movement alert messages, please set up an account at [Twilio](https://www.twilio.com/try-twilio), and obtain an Twilio Account SID, Twilio Auth Token, and Twilio phone number to send out SMS messages. Then, please update the following three credentials in ".env" file : 
+If you are interested in using this program's SMS capabilities to send stock price movement alert messages, please set up an account at [Twilio](https://www.twilio.com/try-twilio) website, and obtain a Twilio Account SID, Twilio Auth Token, and Twilio phone number to send out SMS messages. Then, please update the following three credentials in ".env" file : 
 
     TWILIO_ACCOUNT_SID="EXAMPLE"
     TWILIO_AUTH_TOKEN="EXAMPLE"
