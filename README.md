@@ -47,14 +47,14 @@ Please set up an account at [Alpha Vantage](https://www.alphavantage.co/) and ob
 
 ## Email template set up
 
-If you are interested in using this program's email capabilities to send out stock price movement alerts, please set up an account at [Sendgrid](https://signup.sendgrid.com/), and obtain a Sendgrid API KEY. Then, using that information please update the ".env" file using your Sendgrid API KEY and email address (the one you used to set up the Sendgrid account): 
+If you are interested in using this program's email capabilities to send stock price movement alerts to clients, please set up an account at [Sendgrid](https://signup.sendgrid.com/), and obtain a Sendgrid API KEY. Then, please update the ".env" file using your Sendgrid API KEY and email address (the one you used to set up the Sendgrid account): 
 
     SENDGRID_API_KEY="EXAMPLE" 
     MY_EMAIL_ADDRESS="EXAMPLE" 
 
 ## SMS template set up
 
-If you are interested in using this program's SMS capabilities to send stock price movement alerts, please set up an account at [Twilio](https://www.twilio.com/try-twilio), and obtain a Twilio Account SID, Twilio Auth Token, and Twilio phone number to send out SMS messages. Then, using that information please update the following three credentials in the ".env" file: 
+If you are interested in using this program's SMS capabilities to send stock price movement alerts to clients, please set up an account at [Twilio](https://www.twilio.com/try-twilio), and obtain a Twilio Account SID, Twilio Auth Token, and Twilio phone number to send out SMS messages. Then, using that information please update the following three credentials in the ".env" file: 
 
     TWILIO_ACCOUNT_SID="EXAMPLE"
     TWILIO_AUTH_TOKEN="EXAMPLE"
@@ -71,7 +71,7 @@ python app/robo_advisor.py
 
 # Overview of the "steps" of the robo-advisor program:
 
-1. Enter your stock or cryptocurrency ticker. If you have multiple tickers, type one ticker at a time, and press the 'ENTER' key to enter the next one
+1. Enter your stock or cryptocurrency ticker. If you have multiple tickers, type one ticker at a time, and then press the 'ENTER' key to enter the next one
 
 2. After you have entered all the tickers, enter DONE
 
@@ -81,6 +81,6 @@ python app/robo_advisor.py
 
     Note: Please ask the user to enter a phone number including a '+' sign and the country area code but no dashes or spaces (e.g. +1 for a U.S. phone followed by the actual phone number)
 
-5. After entering the email address and phone number, the program will present some historical trading information for the stock ticker that was requested as well as the stock's price chart (opened in a new web browser window)
+5. After entering the email address and phone number, the program will present some historical trading information for the stock ticker that was requested, the investment recommendation as well as the stock's price chart (opened in a new web browser window)
 
-6. If at the time of the request, the stock price has moved 5% higher or lower than the previous days' closing price, the user will receive an email and SMS alert with the stock price movement information
+6. If at the time of the request, the stock price has moved 5% higher or lower than the previous day's closing price, the user will receive an email and SMS alert with the stock price movement information
