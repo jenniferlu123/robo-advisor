@@ -15,7 +15,8 @@ from twilio.rest import Client
 
 
 load_dotenv()
-api_key = os.environ.get("ALPHAVANTAGE_API_KEY", default="OOPS")
+
+ALPHAVANTAGE_API_KEY = os.environ.get("ALPHAVANTAGE_API_KEY", default="OOPS")
 
 SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY", default="OOPS")
 MY_EMAIL_ADDRESS = os.environ.get("MY_EMAIL_ADDRESS", default="OOPS")
@@ -45,10 +46,10 @@ tickers = []
 while True:
     ticker = input("Please enter a stock ticker or DONE when you finish: ")
     if len(ticker) > 8 or ticker.isnumeric == True:
-        print("Please enter a valid ticker")
+        print("Please enter a valid ticker. It should not be longer than 8 characters or be all-numeric.")
     elif ticker == "DONE":
         user_email = input("To receive price movement alerts by email, please enter your email address: ")
-        user_sms = input("To receive price movement alerts by SMS, pease enter you phone number including a '+' sign and country code: ")
+        user_sms = input("To receive price movement alerts by SMS, please enter you phone number including a '+' sign and country area code (no dahes or spaces): ")
         break
     else: 
         tickers.append(ticker)
@@ -57,27 +58,20 @@ while True:
  # Request information 
 
 for t in tickers:
-    request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={t}&apikey={api_key}&outputsize=full"
+    request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={t}&apikey={ALPHAVANTAGE_API_KEY}&outputsize=full"
     response = requests.get(request_url)
 
     if "Error Message" in response.text:
+        print("-------------------------")
         print("TICKER: " + t)
         print("Sorry, could not find your ticker.")
+        print("-------------------------")
     else:
-        #print(response.text)
         parsed_response = json.loads(response.text)
         
         tsd = parsed_response["Time Series (Daily)"]
         all_dates = list(tsd.keys())
         dates = all_dates[0:252]
-        
-        #for each_day in dates:
-        #    daily_price = tsd[each_day]
-        
-        
-        #print(type(response)) # 'requests.models.Response'
-        #print(response.status_code)
-        #print(response.text)
 
         # Create a csv file for each stock request
         csv_file_name = "prices_" + t + ".csv"
@@ -194,10 +188,11 @@ for t in tickers:
         }, auto_open=True) 
 
 
-        # Send alerts
+        # Send price movement alert messages via Email and SMS
+
         previous_day = dates[1]
         previous_day_close = float(tsd[previous_day]["4. close"])
-        change = (current/previous_day_close)-1
+        change = ((current/previous_day_close)-1)*100
 
         if current >= (previous_day_close*1.05) or current <= (previous_day_close*0.95):
 
