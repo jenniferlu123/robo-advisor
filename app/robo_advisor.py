@@ -13,7 +13,6 @@ import sendgrid
 from sendgrid.helpers.mail import * 
 from twilio.rest import Client
 
-
 load_dotenv()
 
 ALPHAVANTAGE_API_KEY = os.environ.get("ALPHAVANTAGE_API_KEY", default="OOPS")
