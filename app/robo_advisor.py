@@ -84,8 +84,6 @@ if __name__ == "__main__":
 
     for t in tickers:
         response = get_response(t)
-        #request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={t}&apikey={ALPHAVANTAGE_API_KEY}&outputsize=full"
-        #response = requests.get(request_url)
 
         if "Error Message" in response.text:
             print("-------------------------")
