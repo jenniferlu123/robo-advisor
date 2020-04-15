@@ -40,7 +40,7 @@ def to_usd(my_price):
 
 def to_one_decimal_perc(my_number):
     """
-    Converts a numeric value to percentage with one decimal, for printing and display purposes.
+    Converts a numeric value to percentage format with one decimal number, for printing and display purposes.
     
     Source: https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/datatypes/numbers.md#formatting-as-currency
     
@@ -55,7 +55,7 @@ def to_one_decimal_perc(my_number):
 def get_response(my_ticker):
     """
     Takes stock ticker as input, makes a request for its stock price information from Alpha Advantage website, and returns the request response
-    (note that the returned response is not parsed)
+    (the returned response is not parsed)
 
     Source: https://github.com/prof-rossetti/intro-to-python/blob/50ffd90b31143edcb686a525c889977fda1b5d11/notes/python/packages/requests.md
     
@@ -69,7 +69,7 @@ def get_response(my_ticker):
 
 def write_csv_file_name(ticker_input):
     """
-    Takes in any stock ticker and concatenates the ticker with the word "price" to form a CVS file name (with .csv extension)
+    Takes in any stock ticker and creates a CVS file name using that ticker and the word "price" (with .csv extension)
 
     Source: https://github.com/prof-rossetti/intro-to-python/blob/7adaa47921be090406fd43e2e67cbd7c72092bde/notes/python/modules/csv.md
     
@@ -79,7 +79,8 @@ def write_csv_file_name(ticker_input):
     
     Returns: prices_AAPL.csv
     """
-    return "prices_" + ticker_input + ".csv"
+    csv_file_name = f"prices_{ticker_input}.csv"
+    return csv_file_name
 
 
 if __name__ == "__main__":
@@ -230,7 +231,7 @@ if __name__ == "__main__":
             # Send price movement alerts via Email and SMS
             previous_day = dates[1]
             previous_day_close = float(tsd[previous_day]["4. close"])
-            change = (current/previous_day_close-1)*100
+            change = (current/previous_day_close-1) * 100
 
             if current >= (previous_day_close*1.05) or current <= (previous_day_close*0.95):
 
