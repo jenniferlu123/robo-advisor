@@ -69,6 +69,20 @@ Run the python script:
 python app/robo_advisor.py
 ```
 
+# Tests
+
+To install the pytest package, run the command: 
+
+```py
+pip install pytest # fist time only
+```
+
+To run tests, enter the script: 
+
+```py
+pytest
+```
+
 # Overview of the "steps" of the robo-advisor program:
 
 1. Enter your stock or cryptocurrency ticker. If you have multiple tickers, type one ticker at a time, and then press the 'ENTER' key to enter the next one

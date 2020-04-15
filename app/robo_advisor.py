@@ -27,34 +27,61 @@ SENDER_SMS  = os.environ.get("SENDER_SMS", default="OOPS")
 def to_usd(my_price):
     """
     Converts a numeric value to usd-formatted string, for printing and display purposes.
+
     Source: https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/datatypes/numbers.md#formatting-as-currency
+    
     Param: my_price (int or float) like 4000.444444
+    
     Example: to_usd(4000.444444)
+    
     Returns: $4,000.44
     """
     return f"${my_price:,.2f}" 
 
 def to_one_decimal_perc(my_number):
     """
-    Converts a numeric value to a one-decimal percentage number, for printing and display purposes.
+    Converts a numeric value to percentage format with one decimal number, for printing and display purposes.
+    
     Source: https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/datatypes/numbers.md#formatting-as-currency
+    
     Param: my_number (int or float) like 35.87
+    
     Example: to_one_decimal_perc(35.87)
+    
     Returns: 35.9%
     """
     return "{0:.1f}%".format(my_number)
 
 def get_response(my_ticker):
     """
-    Takes stock ticker as input to make a request for that ticker's stock price information and returns the request response
-    Param: my_ticker (string or combination of string and integers) like MSFT
-    Example: my_ticker(MSFT)
+    Takes stock ticker as input, makes a request for its stock price information from Alpha Advantage website, and returns the request response
+    (the returned response is not parsed)
+
+    Source: https://github.com/prof-rossetti/intro-to-python/blob/50ffd90b31143edcb686a525c889977fda1b5d11/notes/python/packages/requests.md
+    
+    Param: my_ticker (string or combination of string and int/float) like "MSFT"
+    
+    Example: get_response("MSFT")
     """
     request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={my_ticker}&apikey={ALPHAVANTAGE_API_KEY}&outputsize=full"
     response = requests.get(request_url)
-    #parsed_response = json.loads(response.text)
     return response
 
+def write_csv_file_name(ticker_input):
+    """
+    Takes in any stock ticker and creates a CVS file name using that ticker and the word "price" (with .csv extension)
+
+    Source: https://github.com/prof-rossetti/intro-to-python/blob/7adaa47921be090406fd43e2e67cbd7c72092bde/notes/python/modules/csv.md
+    
+    Param: ticker_input (string format) like "AAPL"
+    
+    Example: write_csv_file_name("AAPL")
+    
+    Returns: prices_AAPL.csv
+    """
+    csv_file_name = f"prices_{ticker_input}.csv"
+    return csv_file_name
+    
 
 if __name__ == "__main__":
 
@@ -78,9 +105,7 @@ if __name__ == "__main__":
         else: 
             tickers.append(ticker)
     
-
     # Request information 
-
     for t in tickers:
         response = get_response(t)
 
@@ -97,15 +122,12 @@ if __name__ == "__main__":
             dates = all_dates[0:252]
 
             # Create a csv file for each stock request
-            csv_file_name = "prices_" + t + ".csv"
-            csv_file_path = os.path.join(os.path.dirname(__file__),"..", "data", csv_file_name)
+            csv_file_path = os.path.join(os.path.dirname(__file__),"..", "data", write_csv_file_name(t))
             csv_headers = ["timestamp", "open", "high", "low", "close", "volume"]
-
 
             with open(csv_file_path, "w") as csv_file: 
                 writer = csv.DictWriter(csv_file, fieldnames=csv_headers)
                 writer.writeheader() 
-
                 for each_day in dates:
                     daily_prices = tsd[each_day]
                     writer.writerow({
@@ -142,30 +164,28 @@ if __name__ == "__main__":
             # Provide investment recommendation
             current = float(latest_close)
             lowest = float(one_year_low)
-
             percent_diff = (current/lowest - 1) * 100
-            formatted_percent_diff = str(to_one_decimal_perc(percent_diff))
 
             if current <= (lowest *1.1):
                 recommendation = "Strong buy"
-                recommendation_reason = "Current Stock Price (" + to_usd(float(latest_close)) + ") is only " 
-                recommendation_reason += formatted_percent_diff + " higher than its 52-week low of " + to_usd(float(one_year_low))
+                recommendation_reason = "Current Stock Price (" + to_usd(current) + ") is only " 
+                recommendation_reason += str(to_one_decimal_perc(percent_diff)) + " higher than its 52-week low of " + to_usd(lowest)
             elif current > (lowest * 1.1) and current <= (lowest * 1.25):
                 recommendation = "Buy"
-                recommendation_reason = "Current Stock Price (" + to_usd(float(latest_close)) + ") is only " 
-                recommendation_reason += formatted_percent_diff + " higher than its 52-week low of " + to_usd(float(one_year_low))
+                recommendation_reason = "Current Stock Price (" + to_usd(current) + ") is only " 
+                recommendation_reason += str(to_one_decimal_perc(percent_diff)) + " higher than its 52-week low of " + to_usd(lowest)
             elif current > (lowest * 1.25) and current <= (lowest * 1.5):
                 recommendation = "Neutral"
-                recommendation_reason = "Current Stock Price (" + to_usd(float(latest_close)) + ") is " 
-                recommendation_reason += formatted_percent_diff + " higher than its 52-week low of " + to_usd(float(one_year_low))
+                recommendation_reason = "Current Stock Price (" + to_usd(current) + ") is " 
+                recommendation_reason += str(to_one_decimal_perc(percent_diff)) + " higher than its 52-week low of " + to_usd(lowest)
             elif current > (lowest * 1.5) and current <= (lowest * 1.75):
                 recommendation = "Sell"
-                recommendation_reason = "Current Stock Price (" + to_usd(float(latest_close)) + ") is " 
-                recommendation_reason += formatted_percent_diff + " higher than its 52-week low of " + to_usd(float(one_year_low))
+                recommendation_reason = "Current Stock Price (" + to_usd(current) + ") is " 
+                recommendation_reason += str(to_one_decimal_perc(percent_diff)) + " higher than its 52-week low of " + to_usd(lowest)
             elif current > (lowest * 1.75):
                 recommendation = "Strong sell"
-                recommendation_reason = "Current Stock Price (" + to_usd(float(latest_close)) + ") is " 
-                recommendation_reason += formatted_percent_diff + " higher than its 52-week low of " + to_usd(float(one_year_low))
+                recommendation_reason = "Current Stock Price (" + to_usd(current) + ") is " 
+                recommendation_reason += str(to_one_decimal_perc(percent_diff)) + " higher than its 52-week low of " + to_usd(lowest)
             
 
             # INFORMATION OUTPUT
@@ -184,7 +204,7 @@ if __name__ == "__main__":
             output += "\n"
             output += f"LATEST DAY: {last_refreshed}"
             output += "\n"
-            output += f"LATEST CLOSE: {to_usd(float(latest_close))}"
+            output += f"LATEST CLOSE: {to_usd(current)}"
             output += "\n"
             output += f"52-WEEK HIGH: {to_usd(float(one_year_high))}"
             output += "\n"
@@ -201,21 +221,17 @@ if __name__ == "__main__":
 
             print(output)
 
-
             # Plot prices over time using thrid-party package Plotly
-
             plotly.offline.plot({
                 "data": [go.Scatter(x=[each_day for each_day in dates], 
                         y=[tsd[each_day]["4. close"] for each_day in dates])],
                 "layout": go.Layout(title="Stock Price for " + t)
             }, auto_open=True) 
 
-
             # Send price movement alerts via Email and SMS
-
             previous_day = dates[1]
             previous_day_close = float(tsd[previous_day]["4. close"])
-            change = (current/previous_day_close-1)*100
+            change = (current/previous_day_close-1) * 100
 
             if current >= (previous_day_close*1.05) or current <= (previous_day_close*0.95):
 
@@ -244,4 +260,3 @@ if __name__ == "__main__":
                 
             else: 
                 pass
-

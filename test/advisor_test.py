@@ -1,8 +1,8 @@
-# robo-advisor/test/robo_advisor_test.py
+# robo-advisor/test/advisor_test.py
 
 import json
 
-from app.robo_advisor import to_usd, to_one_decimal_perc, get_response
+from app.robo_advisor import to_usd, to_one_decimal_perc, get_response, write_csv_file_name
 
 def test_to_usd():
     result = to_usd(1500)
@@ -18,8 +18,11 @@ def test_to_one_decimal_perc():
     result = to_one_decimal_perc(0.83724)
     assert result == "0.8%"
 
-    result = to_one_decimal_perc(1.5)
-    assert result == "1.5%"
+    result = to_one_decimal_perc(124.5)
+    assert result == "124.5%"
+
+# Python code for test_get_response obtained from prof-rossetti repository 
+# https://github.com/s2t2/robo-advisor-screencast/blob/v3-testing/test/advisor_test.py
 
 def test_get_response():
     t = "MSFT"
@@ -30,3 +33,7 @@ def test_get_response():
     assert "Meta Data" in parsed_response.keys()
     assert "Time Series (Daily)" in parsed_response.keys()
     assert parsed_response["Meta Data"]["2. Symbol"] == t
+
+def test_write_csv_file_name():
+    result = write_csv_file_name("TSLA")
+    assert result == "prices_TSLA.csv"
