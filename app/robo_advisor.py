@@ -81,7 +81,7 @@ def write_csv_file_name(ticker_input):
     """
     csv_file_name = f"prices_{ticker_input}.csv"
     return csv_file_name
-
+    
 
 if __name__ == "__main__":
 
