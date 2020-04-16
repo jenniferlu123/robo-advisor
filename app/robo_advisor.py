@@ -1,4 +1,4 @@
-# app/robo_advisor.py
+# robo-advisor/app/robo_advisor.py
 
 import csv
 import json
@@ -15,14 +15,18 @@ from twilio.rest import Client
 
 load_dotenv()
 
+# Alpha Advantage
 ALPHAVANTAGE_API_KEY = os.environ.get("ALPHAVANTAGE_API_KEY", default="OOPS")
 
+# Sendgrid Integration
 SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY", default="OOPS")
 MY_EMAIL_ADDRESS = os.environ.get("MY_EMAIL_ADDRESS", default="OOPS")
 
+# Twilio Integration
 TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID", default="OOPS")
 TWILIO_AUTH_TOKEN  = os.environ.get("TWILIO_AUTH_TOKEN", default="OOPS")
 SENDER_SMS  = os.environ.get("SENDER_SMS", default="OOPS")
+
 
 def to_usd(my_price):
     """
@@ -54,7 +58,7 @@ def to_one_decimal_perc(my_number):
 
 def get_response(my_ticker):
     """
-    Takes stock ticker as input, makes a request for its stock price information from Alpha Advantage website, and returns the request response
+    Takes stock ticker as input, makes a request for this stock's price information from Alpha Advantage website, and returns the request response
     (the returned response is not parsed)
 
     Source: https://github.com/prof-rossetti/intro-to-python/blob/50ffd90b31143edcb686a525c889977fda1b5d11/notes/python/packages/requests.md
@@ -69,7 +73,7 @@ def get_response(my_ticker):
 
 def write_csv_file_name(ticker_input):
     """
-    Takes in any stock ticker and creates a CVS file name using that ticker and the word "price" (with .csv extension)
+    Takes in any stock ticker and creates a CSV file name concatenating the word "price" with the stock ticker (with .csv extension)
 
     Source: https://github.com/prof-rossetti/intro-to-python/blob/7adaa47921be090406fd43e2e67cbd7c72092bde/notes/python/modules/csv.md
     
@@ -161,31 +165,31 @@ if __name__ == "__main__":
             one_year_high = max(high_prices)
             one_year_low = min(low_prices)
 
+
             # Provide investment recommendation
             current = float(latest_close)
-            lowest = float(one_year_low)
-            percent_diff = (current/lowest - 1) * 100
+            percent_diff = (current/one_year_low - 1) * 100
 
-            if current <= (lowest *1.1):
+            if current <= (one_year_low *1.1):
                 recommendation = "Strong buy"
                 recommendation_reason = "Current Stock Price (" + to_usd(current) + ") is only " 
-                recommendation_reason += str(to_one_decimal_perc(percent_diff)) + " higher than its 52-week low of " + to_usd(lowest)
-            elif current > (lowest * 1.1) and current <= (lowest * 1.25):
+                recommendation_reason += str(to_one_decimal_perc(percent_diff)) + " higher than its 52-week low of " + to_usd(one_year_low)
+            elif current > (one_year_low * 1.1) and current <= (one_year_low * 1.25):
                 recommendation = "Buy"
                 recommendation_reason = "Current Stock Price (" + to_usd(current) + ") is only " 
-                recommendation_reason += str(to_one_decimal_perc(percent_diff)) + " higher than its 52-week low of " + to_usd(lowest)
-            elif current > (lowest * 1.25) and current <= (lowest * 1.5):
+                recommendation_reason += str(to_one_decimal_perc(percent_diff)) + " higher than its 52-week low of " + to_usd(one_year_low)
+            elif current > (one_year_low * 1.25) and current <= (one_year_low * 1.5):
                 recommendation = "Neutral"
                 recommendation_reason = "Current Stock Price (" + to_usd(current) + ") is " 
-                recommendation_reason += str(to_one_decimal_perc(percent_diff)) + " higher than its 52-week low of " + to_usd(lowest)
-            elif current > (lowest * 1.5) and current <= (lowest * 1.75):
+                recommendation_reason += str(to_one_decimal_perc(percent_diff)) + " higher than its 52-week low of " + to_usd(one_year_low)
+            elif current > (one_year_low * 1.5) and current <= (one_year_low * 1.75):
                 recommendation = "Sell"
                 recommendation_reason = "Current Stock Price (" + to_usd(current) + ") is " 
-                recommendation_reason += str(to_one_decimal_perc(percent_diff)) + " higher than its 52-week low of " + to_usd(lowest)
-            elif current > (lowest * 1.75):
+                recommendation_reason += str(to_one_decimal_perc(percent_diff)) + " higher than its 52-week low of " + to_usd(one_year_low)
+            elif current > (one_year_low * 1.75):
                 recommendation = "Strong sell"
                 recommendation_reason = "Current Stock Price (" + to_usd(current) + ") is " 
-                recommendation_reason += str(to_one_decimal_perc(percent_diff)) + " higher than its 52-week low of " + to_usd(lowest)
+                recommendation_reason += str(to_one_decimal_perc(percent_diff)) + " higher than its 52-week low of " + to_usd(one_year_low)
             
 
             # INFORMATION OUTPUT
@@ -206,9 +210,9 @@ if __name__ == "__main__":
             output += "\n"
             output += f"LATEST CLOSE: {to_usd(current)}"
             output += "\n"
-            output += f"52-WEEK HIGH: {to_usd(float(one_year_high))}"
+            output += f"52-WEEK HIGH: {to_usd(one_year_high)}"
             output += "\n"
-            output += f"52-WEEk LOW: {to_usd(float(one_year_low))}"
+            output += f"52-WEEk LOW: {to_usd(one_year_low)}"
             output += "\n"
             output += "-------------------------"
             output += "\n"
@@ -221,6 +225,7 @@ if __name__ == "__main__":
 
             print(output)
 
+
             # Plot prices over time using thrid-party package Plotly
             plotly.offline.plot({
                 "data": [go.Scatter(x=[each_day for each_day in dates], 
@@ -228,13 +233,13 @@ if __name__ == "__main__":
                 "layout": go.Layout(title="Stock Price for " + t)
             }, auto_open=True) 
 
+
             # Send price movement alerts via Email and SMS
             previous_day = dates[1]
             previous_day_close = float(tsd[previous_day]["4. close"])
             change = (current/previous_day_close-1) * 100
 
             if current >= (previous_day_close*1.05) or current <= (previous_day_close*0.95):
-
                 alert_message = "This is an notification alert to informe you that :"
                 alert_message += "\n"
                 alert_message += f"Stock {t} has moved {to_one_decimal_perc(change)} from last trading day's closing price."
@@ -254,7 +259,6 @@ if __name__ == "__main__":
                 response = sg.client.mail.send.post(request_body=mail.get())
 
                 # via SMS
-                
                 client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
                 message = client.messages.create(to=user_sms, from_=SENDER_SMS, body=alert_message)
                 
